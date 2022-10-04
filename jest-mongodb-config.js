@@ -1,7 +1,7 @@
 module.exports = {
   mongodbMemoryServerOptions: {
     binary: {
-      version: '4.4.1',
+      version: '8.9.3',
       skipMD5: true
     },
     autoStart: false,
