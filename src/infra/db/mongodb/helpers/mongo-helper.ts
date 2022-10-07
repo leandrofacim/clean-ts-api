@@ -16,9 +16,13 @@ export const MongoHelper = {
   },
 
   map (collection: any): any {
+    const { _id, name, email, password } = collection
+
     return {
-      id: collection._id.toString(),
-      ...collection
+      id: _id.toString(),
+      name,
+      email,
+      password
     }
   }
 }
