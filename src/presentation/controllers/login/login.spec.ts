@@ -28,6 +28,13 @@ const makeSut = (): SutTypes => {
   }
 }
 
+const makeFakeRequest = (): HttpRequest => ({
+  body: {
+    email: 'any_email@email.com',
+    password: 'any_password'
+  }
+})
+
 describe('LoginController', () => {
   test('should return 400 if no email is provided', async () => {
     const { sut } = makeSut()
@@ -47,14 +54,7 @@ describe('LoginController', () => {
 
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
 
-    const httpRequest: HttpRequest = {
-      body: {
-        email: 'invalid_email@email.com',
-        password: 'any_password'
-      }
-    }
-
-    const httpResponse = await sut.handle(httpRequest)
+    const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('email')))
   })
 
@@ -76,14 +76,7 @@ describe('LoginController', () => {
 
     const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid')
 
-    const httpRequest: HttpRequest = {
-      body: {
-        email: 'any_email@email.com',
-        password: 'any_password'
-      }
-    }
-
-    await sut.handle(httpRequest)
+    await sut.handle(makeFakeRequest())
     expect(isValidSpy).toHaveBeenCalledWith('any_email@email.com')
   })
 })
