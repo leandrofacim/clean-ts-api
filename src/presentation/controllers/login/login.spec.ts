@@ -3,9 +3,20 @@ import { badRequest } from '../../helpers/http-helper'
 import { HttpRequest } from '../../protocols'
 import { LoginController } from './login'
 
+interface SutTypes {
+  sut: LoginController
+}
+
+const makeSut = (): SutTypes => {
+  const sut = new LoginController()
+  return {
+    sut
+  }
+}
+
 describe('LoginController', () => {
   test('should return 400 if no email is provided', async () => {
-    const sut = new LoginController()
+    const { sut } = makeSut()
 
     const httpRequest: HttpRequest = {
       body: {
@@ -18,7 +29,7 @@ describe('LoginController', () => {
   })
 
   test('should return 400 if no password is provided', async () => {
-    const sut = new LoginController()
+    const { sut } = makeSut()
 
     const httpRequest: HttpRequest = {
       body: {
